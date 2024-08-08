@@ -45,11 +45,15 @@ class ApplicationFormApiController(
     }
 
     // 시험원서 상태 업데이트
-    @PutMapping("/status")
-    fun updateApplicationFormStatus(@RequestBody request: UpdateApplicationFormStatusRequest): ResponseEntity<ApplicationFormResponse> {
-        val savedApplicationForm = applicationFormService.updateStatus(request.id, request.status)
+    @PutMapping("/{id}/status")
+    fun updateApplicationFormStatus(
+        @PathVariable id: Long,
+        @RequestBody request: UpdateApplicationFormStatusRequest
+    ): ResponseEntity<ApplicationFormResponse> {
+        val savedApplicationForm = applicationFormService.updateStatus(id, request.status)
         return ResponseEntity.status(HttpStatus.CREATED).body(ApplicationFormResponse(savedApplicationForm))
     }
+
 
     // 시험원서 삭제
     @DeleteMapping("/{id}")
